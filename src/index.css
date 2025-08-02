@@ -1,0 +1,162 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800&display=swap');
+
+@layer base {
+  :root {
+    --background: 330 60% 99%; /* Rosa muito claro */
+    --foreground: 330 30% 15%; /* Rosa escuro */
+
+    --card: 0 0% 100%;
+    --card-foreground: 330 30% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 330 30% 15%;
+
+    --primary: 330 90% 60%; /* Rosa vibrante */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 240 5% 96%; /* Cinza claro */
+    --secondary-foreground: 330 30% 30%;
+
+    --muted: 240 5% 90%; /* Cinza médio */
+    --muted-foreground: 330 30% 40%;
+
+    --accent: 330 80% 85%; /* Rosa pastel */
+    --accent-foreground: 330 30% 30%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 240 5% 85%; /* Cinza claro */
+    --input: 240 5% 85%;
+    --ring: 330 90% 60%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 240 5% 98%;
+    --sidebar-foreground: 330 30% 30%;
+    --sidebar-primary: 330 90% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 330 80% 95%;
+    --sidebar-accent-foreground: 330 30% 30%;
+    --sidebar-border: 240 5% 90%;
+    --sidebar-ring: 330 90% 60%;
+  }
+
+  .dark {
+    --background: 25 20% 15%;
+    --foreground: 25 10% 95%;
+
+    --card: 25 20% 18%;
+    --card-foreground: 25 10% 95%;
+
+    --popover: 25 20% 18%;
+    --popover-foreground: 25 10% 95%;
+
+    --primary: 25 60% 50%;
+    --primary-foreground: 25 10% 95%;
+
+    --secondary: 25 20% 25%;
+    --secondary-foreground: 25 10% 95%;
+
+    --muted: 25 20% 25%;
+    --muted-foreground: 25 20% 70%;
+
+    --accent: 25 20% 30%;
+    --accent-foreground: 25 10% 95%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 25 10% 95%;
+
+    --border: 25 20% 30%;
+    --input: 25 20% 30%;
+    --ring: 25 60% 50%;
+    
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-nunito;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-playfair font-semibold;
+  }
+
+  h1 {
+    @apply text-3xl md:text-4xl lg:text-5xl;
+  }
+
+  h2 {
+    @apply text-2xl md:text-3xl lg:text-4xl;
+  }
+
+  h3 {
+    @apply text-xl md:text-2xl lg:text-3xl;
+  }
+
+  .container {
+    @apply px-4 md:px-6 lg:px-8;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-rosalex-brown-600 text-white px-6 py-2 rounded-md hover:bg-rosalex-brown-700 transition-colors;
+  }
+  
+  .btn-secondary {
+    @apply bg-rosalex-brown-100 text-rosalex-brown-700 px-6 py-2 rounded-md hover:bg-rosalex-brown-200 transition-colors;
+  }
+
+  .section-title {
+    @apply text-2xl md:text-3xl font-playfair font-bold text-rosalex-pink-700 mb-6 relative;
+  }
+  
+  .section-title::after {
+    @apply content-[''] absolute left-0 bottom-0 h-1 w-16 bg-rosalex-accent-orange;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.stagger-fade-in > * {
+  opacity: 0;
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.stagger-fade-in > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-fade-in > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-fade-in > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-fade-in > *:nth-child(4) { animation-delay: 0.4s; }
+.stagger-fade-in > *:nth-child(5) { animation-delay: 0.5s; }
+.stagger-fade-in > *:nth-child(6) { animation-delay: 0.6s; }
