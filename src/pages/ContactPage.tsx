@@ -15,9 +15,9 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 interface ContactFormData {
   name: string;
   email: string;
-  phone: string;
-  subject: string;
-  interest: string;
+  telefone: string; // Corrigido para bater com o backend
+  assunto: string;  // Corrigido para bater com o backend
+  interesse: string; // Corrigido para bater com o backend
   studentAge?: string;
   message: string;
 }
@@ -31,13 +31,22 @@ const ContactPage = () => {
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
     try {
-      // Envia os dados para a Netlify Function
+      // Mapear os campos para os nomes esperados pelo backend
+      const payload = {
+        name: data.name,
+        email: data.email,
+        telefone: data.telefone || data.phone || '',
+        assunto: data.assunto || data.subject || '',
+        interesse: data.interesse || data.interest || '',
+        studentAge: data.studentAge,
+        message: data.message,
+      };
       const response = await fetch('/.netlify/functions/sendEmail', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload),
       });
       const resultado = await response.json();
       if (response.ok && resultado.success) {
@@ -203,7 +212,7 @@ const ContactPage = () => {
                         
                         <FormField
                           control={form.control}
-                          name="phone"
+                          name="telefone"
                           rules={{ required: "Telefone é obrigatório" }}
                           render={({ field }) => (
                             <FormItem>
@@ -219,7 +228,7 @@ const ContactPage = () => {
                       
                       <FormField
                         control={form.control}
-                        name="subject"
+                        name="assunto"
                         rules={{ required: "Assunto é obrigatório" }}
                         render={({ field }) => (
                           <FormItem>
@@ -234,7 +243,7 @@ const ContactPage = () => {
                       
                       <FormField
                         control={form.control}
-                        name="interest"
+                        name="interesse"
                         rules={{ required: "Selecione uma opção" }}
                         render={({ field }) => (
                           <FormItem className="space-y-3">
