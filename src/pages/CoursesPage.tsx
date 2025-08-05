@@ -11,15 +11,15 @@ import TabelaPrecos from "@/components/TabelaPrecos";
 const CoursesPage = () => {
   const basicEducation = [
     {
-      title: "Educação Infantil",
+      title: "Pré-Classe",
       ages: "4 e 5 anos",
       description: "Desenvolvimento socioemocional e primeiros passos na aprendizagem formal.",
       features: ["Abordagem lúdica", "Estímulo à criatividade", "Desenvolvimento motor"],
       icon: <Book className="h-6 w-6 text-rosalex-pink-400" />, 
     },
     {
-      title: "Ensino Fundamental I",
-      ages: "6 a 10 anos (1º ao 5º ano)",
+      title: "Ensino Primario",
+      ages: "6 a 10 anos (1º ao 5º Classe)",
       description: "Base sólida em leitura, escrita, matemática e conhecimentos gerais.",
       features: ["Alfabetização completa", "Raciocínio lógico", "Iniciação científica"],
       icon: <Book className="h-6 w-6 text-rosalex-pink-400" />, 
@@ -28,8 +28,8 @@ const CoursesPage = () => {
 
   const middleEducation = [
     {
-      title: "Ensino Fundamental II",
-      ages: "11 a 14 anos (6º ao 9º ano)",
+      title: "Ensino Secundário",
+      ages: "11 a 14 anos (6º ao 9º Classe)",
       description: "Aprofundamento dos conhecimentos e desenvolvimento do pensamento crítico.",
       features: ["Disciplinas específicas", "Projetos interdisciplinares", "Preparação para o ensino médio"],
       icon: <Book className="h-6 w-6 text-rosalex-pink-400" />, 

@@ -8,97 +8,29 @@ import { X } from "lucide-react";
 const GalleryPage = () => {
   const [openImage, setOpenImage] = useState<string | null>(null);
 
+  // Imagens locais distribuídas por categorias (best-guess)
   const schoolImages = [
-    {
-      src: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-      alt: "Fachada do colégio",
-      category: "infrastructure"
-    },
-    {
-      src: "https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1172&q=80",
-      alt: "Sala de aula moderna",
-      category: "infrastructure"
-    },
-    {
-      src: "https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1186&q=80",
-      alt: "Laboratório de ciências",
-      category: "infrastructure"
-    },
-    {
-      src: "https://images.unsplash.com/photo-1571260899304-425eee4c7efc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-      alt: "Biblioteca",
-      category: "infrastructure"
-    },
-    {
-      src: "https://images.unsplash.com/photo-1519331379826-f10be5486c6f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-      alt: "Quadra poliesportiva",
-      category: "infrastructure"
-    },
-    {
-      src: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1036&q=80",
-      alt: "Refeitório",
-      category: "infrastructure"
-    },
-    {
-      src: "https://images.unsplash.com/photo-1627556704290-2b1f5853ff78?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-      alt: "Alunos em atividade de leitura",
-      category: "activities"
-    },
-    {
-      src: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1122&q=80",
-      alt: "Aula de informática",
-      category: "activities"
-    },
-    {
-      src: "https://images.unsplash.com/photo-1564898148101-82f74d4a1e89?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-      alt: "Experimento científico",
-      category: "activities"
-    },
-    {
-      src: "https://images.unsplash.com/photo-1529390079861-591de354faf5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-      alt: "Aula de música",
-      category: "activities"
-    },
-    {
-      src: "https://images.unsplash.com/photo-1526947425960-945c6e72858f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-      alt: "Aula de arte",
-      category: "activities"
-    },
-    {
-      src: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-      alt: "Atividade física",
-      category: "activities"
-    },
-    {
-      src: "https://images.unsplash.com/photo-1576267423445-b2e0074d68a4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-      alt: "Festa de formatura",
-      category: "events"
-    },
-    {
-      src: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-      alt: "Feira de ciências",
-      category: "events"
-    },
-    {
-      src: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-      alt: "Apresentação cultural",
-      category: "events"
-    },
-    {
-      src: "https://images.unsplash.com/photo-1517486808906-6ca8b3f8e1c1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1247&q=80",
-      alt: "Competição esportiva",
-      category: "events"
-    },
-    {
-      src: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-      alt: "Dia da família na escola",
-      category: "events"
-    },
-    {
-      src: "https://images.unsplash.com/photo-1540479859555-17af45c78602?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-      alt: "Palestra educacional",
-      category: "events"
-    },
+    // Infraestrutura
+    { src: "/IMG/IMG-20250731-WA0004.jpg", alt: "Fachada do colégio", category: "infrastructure" },
+    { src: "/IMG/IMG-20250805-WA0189.jpg", alt: "Entrada principal", category: "infrastructure" },
+    { src: "/IMG/IMG-20250731-WA0006.jpg", alt: "Pátio escolar", category: "infrastructure" },
+    { src: "/IMG/IMG-20250805-WA0172.jpg", alt: "Quadra poliesportiva", category: "infrastructure" },
+    { src: "/IMG/IMG-20250805-WA0239.jpg", alt: "Biblioteca", category: "infrastructure" },
+    { src: "/IMG/IMG-20250731-WA0022.jpg", alt: "Refeitório", category: "infrastructure" },
+    // Atividades
+    { src: "/IMG/IMG-20250805-WA0121.jpg", alt: "Alunos em atividade de leitura", category: "activities" },
+    { src: "/IMG/IMG-20250805-WA0164.jpg", alt: "Aula de informática", category: "activities" },
+    { src: "/IMG/IMG-20250805-WA0101.jpg", alt: "Experimento científico", category: "activities" },
+    { src: "/IMG/IMG-20250805-WA0095.jpg", alt: "Aula de música", category: "activities" },
+    { src: "/IMG/IMG-20250805-WA0102.jpg", alt: "Aula de arte", category: "activities" },
+    { src: "/IMG/IMG-20250805-WA0237.jpg", alt: "Atividade física", category: "activities" },
+    // Eventos
+    { src: "/IMG/IMG-20250731-WA0026.jpg", alt: "Festa de formatura", category: "events" },
+    { src: "public/IMG/IMG-20250805-WA0235.jpg", alt: "Feira de ciências", category: "events" },
+    { src: "/IMG/IMG-20250805-WA0152.jpg", alt: "Apresentação cultural", category: "events" },
+    { src: "/IMG/IMG-20250805-WA0080.jpg", alt: "Competição esportiva", category: "events" },
+    { src: "/IMG/IMG-20250805-WA0077.jpg", alt: "Dia da família na escola", category: "events" },
+    { src: "/IMG/IMG-20250805-WA0073.jpg", alt: "Palestra educacional", category: "events" },
   ];
 
   return (

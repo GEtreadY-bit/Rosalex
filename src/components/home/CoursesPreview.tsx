@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -10,14 +9,14 @@ const CoursesPreview = () => {
       title: "Ensino Primario",
       icon: <Book className="h-8 w-8 text-rosalex-gray-700" />,
       description: "Formação fundamental com foco no desenvolvimento integral da criança.",
-      levels: "1º ao 6º ano",
+      levels: "Pré a 6º Classe",
       color: "bg-gradient-to-br from-rosalex-gray-50 to-rosalex-pink-50",
     },
     {
       title: "Ensino Secundario",
       icon: <BookOpen className="h-8 w-8 text-rosalex-pink-700" />,
       description: "Preparação acadêmica sólida para o futuro profissional dos nossos alunos.",
-      levels: "7º ao 9º ano",
+      levels: "7º ao 9º Classe",
       color: "bg-gradient-to-br from-rosalex-gray-100 to-rosalex-pink-100",
     }
   ];

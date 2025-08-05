@@ -57,7 +57,6 @@ const TabelaPrecos: React.FC = () => {
               {custos.map((c, i) => (
                 <tr key={i} className="hover:bg-rosalex-brown-50 transition">
                   <td className="px-4 py-2 border-b text-rosalex-brown-700 font-medium">{c.nome}</td>
-                  <td className="px-4 py-2 border-b text-rosalex-brown-800 font-bold">{c.valor}</td>
                 </tr>
               ))}
             </tbody>

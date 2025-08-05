@@ -101,7 +101,7 @@ const ContactPage = () => {
                     <div>
                       <h3 className="font-bold text-rosalex-gray-900 mb-1">Endereço</h3>
                       <p className="text-rosalex-gray-700">
-                        Rua Principal, Bairro Educacional<br />
+                        Rua Do Paiyol, Gamek<br />
                         Luanda, Angola
                       </p>
                     </div>
@@ -115,7 +115,6 @@ const ContactPage = () => {
                       <h3 className="font-bold text-rosalex-gray-900 mb-1">Telefone</h3>
                       <p className="text-rosalex-gray-700">
                         +244 923 449 800<br />
-                        +244 923 ""
                       </p>
                     </div>
                   </CardContent>
@@ -128,7 +127,6 @@ const ContactPage = () => {
                       <h3 className="font-bold text-rosalex-gray-900 mb-1">E-mail</h3>
                       <p className="text-rosalex-gray-700">
                         rosalexinfo@gmail.com
-                        +
                       </p>
                     </div>
                   </CardContent>
