@@ -26,7 +26,7 @@ const GalleryPage = () => {
     { src: "/IMG/IMG-20250805-WA0237.jpg", alt: "Atividade física", category: "activities" },
     // Eventos
     { src: "/IMG/IMG-20250731-WA0026.jpg", alt: "Festa de formatura", category: "events" },
-    { src: "public/IMG/IMG-20250805-WA0235.jpg", alt: "Feira de ciências", category: "events" },
+    { src: "/IMG/IMG-20250805-WA0235.jpg", alt: "Feira de ciências", category: "events" },
     { src: "/IMG/IMG-20250805-WA0152.jpg", alt: "Apresentação cultural", category: "events" },
     { src: "/IMG/IMG-20250805-WA0080.jpg", alt: "Competição esportiva", category: "events" },
     { src: "/IMG/IMG-20250805-WA0077.jpg", alt: "Dia da família na escola", category: "events" },
