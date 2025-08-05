@@ -160,23 +160,23 @@ const AdminPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-rosalex-brown-50 to-white py-10 flex flex-col items-center">
-      <h1 className="text-4xl font-extrabold mb-8 text-rosalex-brown-900 tracking-tight drop-shadow animate-fade-in">
+    <div className="min-h-screen bg-gradient-to-b from-rosalex-brown-50 to-white py-6 sm:py-10 flex flex-col items-center px-2">
+      <h1 className="text-2xl sm:text-4xl font-extrabold mb-6 sm:mb-8 text-rosalex-brown-900 tracking-tight drop-shadow animate-fade-in text-center">
         Painel Administrativo <span className="text-rosalex-accent-orange">Notícias</span>
       </h1>
-      <div className="w-full max-w-2xl bg-white/90 rounded-2xl shadow-2xl p-8 mb-10 border border-rosalex-brown-100 animate-fade-in">
-        <h2 className="text-2xl font-bold mb-6 text-rosalex-brown-800 flex items-center gap-2">
+      <div className="w-full max-w-xs sm:max-w-2xl bg-white/90 rounded-2xl shadow-2xl p-4 sm:p-8 mb-6 sm:mb-10 border border-rosalex-brown-100 animate-fade-in">
+        <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-rosalex-brown-800 flex items-center gap-2">
           {editing ? <span className="text-rosalex-accent-orange">Editar Notícia</span> : <span>Nova Notícia</span>}
         </h2>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             <div>
               <label className="block text-sm font-semibold mb-2 text-rosalex-brown-700">Título</label>
               <input
                 name="title"
                 value={form.title}
                 onChange={handleChange}
-                className="w-full border border-rosalex-brown-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-rosalex-accent-orange focus:outline-none bg-rosalex-brown-50 text-rosalex-brown-900"
+                className="w-full border border-rosalex-brown-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-rosalex-accent-orange focus:outline-none bg-rosalex-brown-50 text-rosalex-brown-900 text-base"
                 required
               />
             </div>
@@ -186,19 +186,19 @@ const AdminPage = () => {
                 name="excerpt"
                 value={form.excerpt}
                 onChange={handleChange}
-                className="w-full border border-rosalex-brown-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-rosalex-accent-orange focus:outline-none bg-rosalex-brown-50 text-rosalex-brown-900"
+                className="w-full border border-rosalex-brown-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-rosalex-accent-orange focus:outline-none bg-rosalex-brown-50 text-rosalex-brown-900 text-base"
                 required
               />
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             <div>
               <label className="block text-sm font-semibold mb-2 text-rosalex-brown-700">Data</label>
               <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
                 <PopoverTrigger asChild>
                   <button
                     type="button"
-                    className="w-full border border-rosalex-brown-200 rounded-lg px-4 py-2 text-left bg-rosalex-brown-50 text-rosalex-brown-900 focus:ring-2 focus:ring-rosalex-accent-orange focus:outline-none"
+                className="w-full border border-rosalex-brown-200 rounded-lg px-3 py-2 text-left bg-rosalex-brown-50 text-rosalex-brown-900 focus:ring-2 focus:ring-rosalex-accent-orange focus:outline-none text-base"
                     onClick={() => setCalendarOpen(true)}
                   >
                     {form.date ? format(new Date(form.date), "dd/MM/yyyy") : "Selecionar data"}
@@ -215,16 +215,16 @@ const AdminPage = () => {
               </Popover>
             </div>
             <div>
-              <label className="block text-sm font-semibold mb-2 text-rosalex-brown-700">Imagem (jpeg/png)</label>
+            <label className="block text-sm font-semibold mb-2 text-rosalex-brown-700">Imagem (jpeg/png)</label>
               <input
                 name="image"
                 type="file"
                 accept="image/jpeg,image/png"
                 onChange={handleChange}
-                className="w-full border border-rosalex-brown-200 rounded-lg px-4 py-2 bg-rosalex-brown-50 text-rosalex-brown-900"
+                className="w-full border border-rosalex-brown-200 rounded-lg px-3 py-2 bg-rosalex-brown-50 text-rosalex-brown-900 text-base"
               />
               {form.image && typeof form.image === 'string' && (
-                <img src={getImageUrl(form.image)} alt="Pré-visualização" className="max-h-24 mt-2 rounded shadow border border-rosalex-brown-100" onError={e => (e.currentTarget.style.display = 'none')} />
+                <img src={getImageUrl(form.image)} alt="Pré-visualização" className="max-h-20 sm:max-h-24 mt-2 rounded shadow border border-rosalex-brown-100" onError={e => (e.currentTarget.style.display = 'none')} />
               )}
             </div>
           </div>

@@ -31,38 +31,30 @@ const ContactPage = () => {
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
     try {
-      // Envia os dados como JSON para o backend
-      const response = await fetch("/api/contact", {
-        method: "POST",
+      // Envia os dados para a Netlify Function
+      const response = await fetch('/.netlify/functions/sendEmail', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          name: data.name,
-          email: data.email,
-          phone: data.phone,
-          subject: data.subject,
-          interest: data.interest,
-          studentAge: data.studentAge,
-          message: data.message,
-        }),
+        body: JSON.stringify(data),
       });
-      if (response.ok) {
+      const resultado = await response.json();
+      if (response.ok && resultado.success) {
         toast({
-          title: "Mensagem enviada",
-          description: "Agradecemos o seu contato. Retornaremos em breve!",
+          title: 'Mensagem enviada',
+          description: 'Agradecemos o seu contato. Retornaremos em breve!',
         });
         form.reset();
       } else {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData?.error || "Falha ao enviar o formulário");
+        throw new Error(resultado?.error || 'Falha ao enviar o formulário');
       }
     } catch (error) {
-      console.error("Erro ao enviar formulário:", error);
+      console.error('Erro ao enviar formulário:', error);
       toast({
-        title: "Erro",
-        description: "Ocorreu um erro ao enviar sua mensagem. Por favor, tente novamente.",
-        variant: "destructive",
+        title: 'Erro',
+        description: 'Ocorreu um erro ao enviar sua mensagem. Por favor, tente novamente.',
+        variant: 'destructive',
       });
     } finally {
       setIsSubmitting(false);
@@ -72,10 +64,10 @@ const ContactPage = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-rosalex-gray-50 via-white to-rosalex-pink-50 py-16 animate-fade-in">
-        <div className="container mx-auto px-4">
+      <section className="bg-gradient-to-b from-rosalex-gray-50 via-white to-rosalex-pink-50 py-10 sm:py-14 md:py-16 animate-fade-in">
+        <div className="container mx-auto px-2 sm:px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-rosalex-gray-900 mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-rosalex-gray-900 mb-4 sm:mb-6">
               Entre em Contato
             </h1>
             <p className="text-lg text-rosalex-gray-700">
@@ -86,9 +78,9 @@ const ContactPage = () => {
       </section>
 
       {/* Contact Info and Form */}
-      <section className="py-16 bg-gradient-to-b from-rosalex-gray-50 via-white to-rosalex-pink-50">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <section className="py-10 sm:py-14 md:py-16 bg-gradient-to-b from-rosalex-gray-50 via-white to-rosalex-pink-50">
+        <div className="container mx-auto px-2 sm:px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Contact Information */}
             <div className="stagger-fade-in">
               <h2 className="text-2xl font-bold text-rosalex-gray-900 mb-6">Informações de Contato</h2>

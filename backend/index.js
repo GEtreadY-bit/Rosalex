@@ -1,13 +1,12 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const { PrismaClient } = require('@prisma/client');
+import sql from './db.js';
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
 
-const prisma = new PrismaClient();
 const app = express();
 const PORT = 4000;
 const SECRET = process.env.JWT_SECRET || 'rosalex-secret';
@@ -66,10 +65,10 @@ app.post('/login', (req, res) => {
 // GET all news
 app.get('/news', async (req, res) => {
   try {
-    const news = await prisma.news.findMany();
+    const news = await sql`SELECT * FROM "News" ORDER BY date DESC`;
     res.json(news);
   } catch (err) {
-    console.error('Erro ao buscar notícias:', err); // Mostra o erro detalhado no terminal
+    console.error('Erro ao buscar notícias:', err);
     res.status(500).json({ error: 'Erro ao buscar notícias.' });
   }
 });
@@ -91,15 +90,11 @@ app.post('/news', requireAuth, upload.single('image'), async (req, res) => {
     } else {
       parsedCategories = [];
     }
-    const news = await prisma.news.create({
-      data: {
-        title,
-        excerpt,
-        date,
-        image,
-        categories: JSON.stringify(parsedCategories),
-      },
-    });
+    const [news] = await sql`
+      INSERT INTO "News" (title, excerpt, date, image, categories)
+      VALUES (${title}, ${excerpt}, ${date}, ${image}, ${JSON.stringify(parsedCategories)})
+      RETURNING *;
+    `;
     res.status(201).json(news);
   } catch (err) {
     console.error('Erro ao criar notícia:', err);
@@ -125,16 +120,12 @@ app.put('/news/:id', requireAuth, upload.single('image'), async (req, res) => {
     } else {
       parsedCategories = [];
     }
-    const news = await prisma.news.update({
-      where: { id: Number(id) },
-      data: {
-        title,
-        excerpt,
-        date,
-        image,
-        categories: JSON.stringify(parsedCategories),
-      },
-    });
+    const [news] = await sql`
+      UPDATE "News"
+      SET title = ${title}, excerpt = ${excerpt}, date = ${date}, image = ${image}, categories = ${JSON.stringify(parsedCategories)}
+      WHERE id = ${Number(id)}
+      RETURNING *;
+    `;
     res.json(news);
   } catch (err) {
     console.error('Erro ao atualizar notícia:', err);
@@ -146,10 +137,10 @@ app.put('/news/:id', requireAuth, upload.single('image'), async (req, res) => {
 app.delete('/news/:id', requireAuth, async (req, res) => {
   try {
     const { id } = req.params;
-    await prisma.news.delete({ where: { id: Number(id) } });
+    await sql`DELETE FROM "News" WHERE id = ${Number(id)}`;
     res.json({ message: 'Notícia deletada com sucesso.' });
   } catch (err) {
-    console.error('Erro ao deletar notícia:', err); // Mostra o erro detalhado no terminal
+    console.error('Erro ao deletar notícia:', err);
     res.status(500).json({ error: 'Erro ao deletar notícia.' });
   }
 });

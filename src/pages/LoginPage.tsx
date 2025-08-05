@@ -30,15 +30,15 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-rosalex-pink-50">
-      <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow max-w-sm w-full space-y-6 animate-fade-in">
-        <h2 className="text-2xl font-bold text-rosalex-pink-800 mb-4 text-center">Área Administrativa</h2>
+    <div className="min-h-screen flex items-center justify-center bg-rosalex-pink-50 px-2">
+      <form onSubmit={handleSubmit} className="bg-white p-4 sm:p-8 rounded-lg shadow max-w-xs sm:max-w-sm w-full space-y-6 animate-fade-in">
+        <h2 className="text-xl sm:text-2xl font-bold text-rosalex-pink-800 mb-3 sm:mb-4 text-center">Área Administrativa</h2>
         {error && <div className="text-red-600 text-sm text-center">{error}</div>}
         <div>
           <label className="block text-rosalex-pink-700 mb-1">Usuário</label>
           <input
             type="text"
-            className="w-full border border-rosalex-pink-200 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-rosalex-pink-400"
+            className="w-full border border-rosalex-pink-200 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-rosalex-pink-400 text-base"
             value={username}
             onChange={e => setUsername(e.target.value)}
             required
@@ -48,7 +48,7 @@ const LoginPage = () => {
           <label className="block text-rosalex-pink-700 mb-1">Senha</label>
           <input
             type="password"
-            className="w-full border border-rosalex-pink-200 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-rosalex-pink-400"
+            className="w-full border border-rosalex-pink-200 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-rosalex-pink-400 text-base"
             value={password}
             onChange={e => setPassword(e.target.value)}
             required
