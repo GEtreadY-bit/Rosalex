@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 
 exports.handler = async function (event, context) {
-  const { name, email, message } = JSON.parse(event.body);
+  const { name, email, telefone, assunto, interesse, message } = JSON.parse(event.body);
 
   const transporter = nodemailer.createTransport({
     service: 'Gmail',
@@ -16,7 +16,7 @@ exports.handler = async function (event, context) {
     to: process.env.EMAIL_USER,
     replyTo: email,
     subject: `Nova mensagem de ${name}`,
-    text: message,
+    text: `Nome: ${name}\nEmail: ${email}\nTelefone: ${telefone || ''}\nAssunto: ${assunto || ''}\nInteresse: ${interesse || ''}\nMensagem: ${message}`,
   };
 
   try {

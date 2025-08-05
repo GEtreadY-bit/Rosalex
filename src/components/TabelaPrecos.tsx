@@ -32,7 +32,6 @@ const TabelaPrecos: React.FC = () => {
                 <th className="px-4 py-2 font-semibold text-rosalex-accent-green">Língua Nacional</th>
                 <th className="px-4 py-2 font-semibold text-rosalex-accent-orange">Caligrafia</th>
                 <th className="px-4 py-2 font-semibold text-rosalex-accent-green">Informática</th>
-                <th className="px-4 py-2 font-semibold text-rosalex-brown-700">Total</th>
               </tr>
             </thead>
             <tbody>
@@ -43,7 +42,7 @@ const TabelaPrecos: React.FC = () => {
                   <td className={`px-4 py-2 border-b ${linha.lingua ? 'bg-rosalex-accent-green/20 text-rosalex-accent-green font-semibold rounded' : ''}`}>{linha.lingua ? '✔' : ''}</td>
                   <td className={`px-4 py-2 border-b ${linha.caligrafia ? 'bg-rosalex-accent-orange/20 text-rosalex-accent-orange font-semibold rounded' : ''}`}>{linha.caligrafia ? '✔' : ''}</td>
                   <td className={`px-4 py-2 border-b ${linha.info ? 'bg-rosalex-accent-green/20 text-rosalex-accent-green font-semibold rounded' : ''}`}>{linha.info ? '✔' : ''}</td>
-                  <td className="px-4 py-2 border-b font-bold text-rosalex-brown-800">{linha.total}</td>
+                  {/* coluna Total removida */}
                 </tr>
               ))}
             </tbody>

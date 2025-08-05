@@ -63,15 +63,15 @@ const CoursesPage = () => {
       <section className="py-10 sm:py-14 md:py-16">
         <div className="container mx-auto px-2 sm:px-4">
           <Tabs defaultValue="basic" className="w-full max-w-4xl mx-auto">
-            <TabsList className="flex w-full flex-col sm:flex-row justify-center gap-2 sm:gap-4 mb-8 sm:mb-12 bg-white p-2 sm:p-3 rounded-xl sm:rounded-2xl border border-rosalex-gray-100 shadow-sm">
+            <TabsList className="flex w-full overflow-x-auto no-scrollbar sm:flex-row flex-row gap-2 sm:gap-4 mb-8 sm:mb-12 bg-white p-2 sm:p-3 rounded-xl sm:rounded-2xl border border-rosalex-gray-100 shadow-sm">
               <TabsTrigger 
                 value="basic" 
-                className="flex-1 text-base font-semibold px-4 sm:px-10 py-2 sm:py-4 rounded-lg sm:rounded-xl transition-all duration-200 border border-transparent data-[state=active]:bg-gradient-to-r data-[state=active]:from-rosalex-pink-100 data-[state=active]:to-rosalex-gray-50 data-[state=active]:text-rosalex-pink-800 data-[state=active]:border-rosalex-pink-300 bg-white text-rosalex-gray-700 hover:bg-rosalex-pink-50 hover:text-rosalex-pink-700"
-              >Ensino Primario</TabsTrigger>
+                className="flex-shrink-0 min-w-[180px] text-base font-semibold px-4 sm:px-10 py-3 sm:py-4 rounded-lg sm:rounded-xl transition-all duration-200 border border-transparent data-[state=active]:bg-gradient-to-r data-[state=active]:from-rosalex-pink-100 data-[state=active]:to-rosalex-gray-50 data-[state=active]:text-rosalex-pink-800 data-[state=active]:border-rosalex-pink-300 bg-white text-rosalex-gray-700 hover:bg-rosalex-pink-50 hover:text-rosalex-pink-700"
+              >Ensino Primário</TabsTrigger>
               <TabsTrigger 
                 value="middle" 
-                className="flex-1 text-base font-semibold px-4 sm:px-10 py-2 sm:py-4 rounded-lg sm:rounded-xl transition-all duration-200 border border-transparent data-[state=active]:bg-gradient-to-r data-[state=active]:from-rosalex-pink-100 data-[state=active]:to-rosalex-gray-50 data-[state=active]:text-rosalex-pink-800 data-[state=active]:border-rosalex-pink-300 bg-white text-rosalex-gray-700 hover:bg-rosalex-pink-50 hover:text-rosalex-pink-700"
-              >Ensino Secundario e Extras</TabsTrigger>
+                className="flex-shrink-0 min-w-[220px] text-base font-semibold px-4 sm:px-10 py-3 sm:py-4 rounded-lg sm:rounded-xl transition-all duration-200 border border-transparent data-[state=active]:bg-gradient-to-r data-[state=active]:from-rosalex-pink-100 data-[state=active]:to-rosalex-gray-50 data-[state=active]:text-rosalex-pink-800 data-[state=active]:border-rosalex-pink-300 bg-white text-rosalex-gray-700 hover:bg-rosalex-pink-50 hover:text-rosalex-pink-700"
+              >Ensino Secundário e Extras</TabsTrigger>
             </TabsList>
             
             <TabsContent value="basic">
