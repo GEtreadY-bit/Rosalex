@@ -26,7 +26,7 @@ const ContactPage = () => {
   const form = useForm<ContactFormData>();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const interestValue = form.watch("interest");
+  const interestValue = form.watch("interesse");
 
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
@@ -35,9 +35,9 @@ const ContactPage = () => {
       const payload = {
         name: data.name,
         email: data.email,
-        telefone: data.telefone || data.phone || '',
-        assunto: data.assunto || data.subject || '',
-        interesse: data.interesse || data.interest || '',
+        telefone: data.telefone,
+        assunto: data.assunto,
+        interesse: data.interesse,
         studentAge: data.studentAge,
         message: data.message,
       };
