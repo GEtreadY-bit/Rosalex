@@ -25,7 +25,7 @@ const HeroSection = () => {
           <div className="relative h-80 md:h-[500px] rounded-lg overflow-hidden shadow-xl animate-scale-in">
             <div className="absolute inset-0 bg-gradient-to-t from-rosalex-gray-900/60 to-transparent z-10"></div>
             <img
-              src="/IMG/IMG-20250731-WA0004.jpg"
+              src="/IMG/IMG-20250731-WA0025.jpg"
               alt="Estudantes do Colégio Rosalex"
               className="w-full h-full object-cover"
             />
