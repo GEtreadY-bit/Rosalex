@@ -29,7 +29,6 @@ const TabelaPrecos: React.FC = () => {
               <tr>
                 <th className="px-4 py-2 font-semibold text-rosalex-brown-700">Ano</th>
                 <th className="px-4 py-2 font-semibold text-rosalex-accent-blue">Inglês</th>
-                <th className="px-4 py-2 font-semibold text-rosalex-accent-green">Língua Nacional</th>
                 <th className="px-4 py-2 font-semibold text-rosalex-accent-orange">Caligrafia</th>
                 <th className="px-4 py-2 font-semibold text-rosalex-accent-green">Informática</th>
               </tr>
@@ -39,7 +38,6 @@ const TabelaPrecos: React.FC = () => {
                 <tr key={index} className="hover:bg-rosalex-brown-50 transition">
                   <td className="px-4 py-2 font-bold text-rosalex-brown-700 border-b">{linha.ano}</td>
                   <td className={`px-4 py-2 border-b ${linha.ingles ? 'bg-rosalex-accent-blue/20 text-rosalex-accent-blue font-semibold rounded' : ''}`}>{linha.ingles ? '✔' : ''}</td>
-                  <td className={`px-4 py-2 border-b ${linha.lingua ? 'bg-rosalex-accent-green/20 text-rosalex-accent-green font-semibold rounded' : ''}`}>{linha.lingua ? '✔' : ''}</td>
                   <td className={`px-4 py-2 border-b ${linha.caligrafia ? 'bg-rosalex-accent-orange/20 text-rosalex-accent-orange font-semibold rounded' : ''}`}>{linha.caligrafia ? '✔' : ''}</td>
                   <td className={`px-4 py-2 border-b ${linha.info ? 'bg-rosalex-accent-green/20 text-rosalex-accent-green font-semibold rounded' : ''}`}>{linha.info ? '✔' : ''}</td>
                   {/* coluna Total removida */}
