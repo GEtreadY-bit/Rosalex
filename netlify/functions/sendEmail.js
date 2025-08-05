@@ -3,6 +3,11 @@ const nodemailer = require('nodemailer');
 exports.handler = async function (event, context) {
   const { name, email, telefone, assunto, interesse, message } = JSON.parse(event.body);
 
+  // Garantir que os campos opcionais sejam strings
+  const safeTelefone = typeof telefone === 'string' ? telefone : (telefone ? String(telefone) : '');
+  const safeAssunto = typeof assunto === 'string' ? assunto : (assunto ? String(assunto) : '');
+  const safeInteresse = typeof interesse === 'string' ? interesse : (interesse ? String(interesse) : '');
+
   const transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
@@ -16,7 +21,7 @@ exports.handler = async function (event, context) {
     to: process.env.EMAIL_USER,
     replyTo: email,
     subject: `Nova mensagem de ${name}`,
-    text: `Nome: ${name}\nEmail: ${email}\nTelefone: ${telefone || ''}\nAssunto: ${assunto || ''}\nInteresse: ${interesse || ''}\nMensagem: ${message}`,
+    text: `Nome: ${name}\nEmail: ${email}\nTelefone: ${safeTelefone}\nAssunto: ${safeAssunto}\nInteresse: ${safeInteresse}\nMensagem: ${message}`,
   };
 
   try {
