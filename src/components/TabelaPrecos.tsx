@@ -23,7 +23,8 @@ const TabelaPrecos: React.FC = () => {
     <div className="max-w-4xl mx-auto">
       <div className="bg-white rounded-xl shadow-lg p-8 mb-8 border border-rosalex-brown-200 animate-fade-in">
         <h2 className="text-2xl font-bold text-rosalex-brown-800 mb-6 text-center">Tabela de Preços por Classe</h2>
-        <div className="w-full overflow-x-auto">
+        {/* Tabela responsiva tipo cards para mobile */}
+        <div className="hidden sm:block w-full overflow-x-auto">
           <table className="w-full min-w-[600px] text-sm text-center rounded-lg overflow-hidden">
             <thead className="bg-rosalex-brown-100">
               <tr>
@@ -46,6 +47,32 @@ const TabelaPrecos: React.FC = () => {
               ))}
             </tbody>
           </table>
+        </div>
+        <div className="block sm:hidden space-y-4">
+          {tabela.map((linha, index) => (
+            <div key={index} className="rounded-lg border border-rosalex-brown-100 bg-white shadow p-4 flex flex-col gap-2">
+              <div className="flex justify-between font-bold text-rosalex-brown-700">
+                <span>Ano</span>
+                <span>{linha.ano}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-rosalex-accent-blue">Inglês</span>
+                <span className={linha.ingles ? "text-rosalex-accent-blue font-semibold" : "text-gray-400"}>{linha.ingles ? '✔' : '-'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-rosalex-accent-orange">Caligrafia</span>
+                <span className={linha.caligrafia ? "text-rosalex-accent-orange font-semibold" : "text-gray-400"}>{linha.caligrafia ? '✔' : '-'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-rosalex-accent-green">Informática</span>
+                <span className={linha.info ? "text-rosalex-accent-green font-semibold" : "text-gray-400"}>{linha.info ? '✔' : '-'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-rosalex-accent-pink">Acomp. Psicopedagógico</span>
+                <span className={linha.psicopedagogico ? "text-rosalex-accent-pink font-semibold" : "text-gray-400"}>{linha.psicopedagogico ? '✔' : '-'}</span>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
           {/* Segunda tabela removida */}
