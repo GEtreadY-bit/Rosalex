@@ -75,7 +75,6 @@ const TabelaPrecos: React.FC = () => {
           ))}
         </div>
       </div>
-          {/* Segunda tabela removida */}
     </div>
   );
 };

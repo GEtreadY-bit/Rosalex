@@ -11,6 +11,7 @@ const GalleryPage = () => {
   // Imagens locais distribuídas por categorias (best-guess)
   const schoolImages = [
     // Infraestrutura
+    { src: "/IMG/1000221566 (4688×3125).jpg", alt: "Fachada do colégio", category: "infrastructure" },
     { src: "/IMG/IMG-20250731-WA0004.jpg", alt: "Fachada do colégio", category: "infrastructure" },
     { src: "/IMG/IMG-20250805-WA0189.jpg", alt: "Entrada principal", category: "infrastructure" },
     { src: "/IMG/IMG-20250731-WA0006.jpg", alt: "Pátio escolar", category: "infrastructure" },
