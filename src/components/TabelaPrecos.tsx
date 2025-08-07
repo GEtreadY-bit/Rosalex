@@ -23,8 +23,8 @@ const TabelaPrecos: React.FC = () => {
     <div className="max-w-4xl mx-auto">
       <div className="bg-white rounded-xl shadow-lg p-8 mb-8 border border-rosalex-brown-200 animate-fade-in">
         <h2 className="text-2xl font-bold text-rosalex-brown-800 mb-6 text-center">Tabela de Preços por Classe</h2>
-        <div className="overflow-x-auto">
-          <table className="min-w-full text-sm text-center rounded-lg overflow-hidden">
+        <div className="w-full overflow-x-auto">
+          <table className="w-full min-w-[600px] text-sm text-center rounded-lg overflow-hidden">
             <thead className="bg-rosalex-brown-100">
               <tr>
                 <th className="px-2 py-2 font-semibold text-rosalex-brown-700 whitespace-nowrap">Ano</th>
@@ -48,20 +48,7 @@ const TabelaPrecos: React.FC = () => {
           </table>
         </div>
       </div>
-      <div className="bg-white rounded-xl shadow p-6 border border-rosalex-brown-100 animate-fade-in">
-        <h2 className="text-xl font-bold text-rosalex-brown-800 mb-4 text-center">Outros Custos</h2>
-        <div className="overflow-x-auto">
-          <table className="min-w-full text-sm text-left">
-            <tbody>
-              {custos.map((c, i) => (
-                <tr key={i} className="hover:bg-rosalex-brown-50 transition">
-                  <td className="px-4 py-2 border-b text-rosalex-brown-700 font-medium">{c.nome}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+          {/* Segunda tabela removida */}
     </div>
   );
 };
