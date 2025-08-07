@@ -3,15 +3,15 @@ import React from "react";
 
 const TabelaPrecos: React.FC = () => {
   const tabela = [
-    { ano: "1ª", total: "8.451,80" },
-    { ano: "2ª", total: "8.451,80"},
-    { ano: "3ª", total: "8.451,80",ingles: true },
-    { ano: "4ª", total: "10.451,80", ingles: true },
-    { ano: "5ª", total: "10.451,80", caligrafia: true,ingles: true,info: true  },
-    { ano: "6ª", total: "13.055,50", ingles: true, caligrafia: true, info: true },
-    { ano: "7ª", total: "13.055,50", lingua: true, caligrafia: true, info: true },
-    { ano: "8ª", total: "13.055,50", lingua: true, caligrafia: true, info: true },
-    { ano: "9ª", total: "13.055,50", lingua: true, caligrafia: true, info: true },
+    { ano: "1ª", total: "8.451,80", psicopedagogico: true },
+    { ano: "2ª", total: "8.451,80", psicopedagogico: true },
+    { ano: "3ª", total: "8.451,80", ingles: true, psicopedagogico: true },
+    { ano: "4ª", total: "10.451,80", ingles: true, psicopedagogico: true },
+    { ano: "5ª", total: "10.451,80", caligrafia: true, ingles: true, info: true, psicopedagogico: true },
+    { ano: "6ª", total: "13.055,50", ingles: true, caligrafia: true, info: true, psicopedagogico: true },
+    { ano: "7ª", total: "13.055,50", caligrafia: true, info: true, psicopedagogico: true },
+    { ano: "8ª", total: "13.055,50", caligrafia: true, info: true, psicopedagogico: true },
+    { ano: "9ª", total: "13.055,50", caligrafia: true, info: true, psicopedagogico: true },
   ];
   const custos = [
     { nome: "Confirmação", valor: "5.000,00" },
@@ -27,10 +27,11 @@ const TabelaPrecos: React.FC = () => {
           <table className="min-w-full text-sm text-center rounded-lg overflow-hidden">
             <thead className="bg-rosalex-brown-100">
               <tr>
-                <th className="px-4 py-2 font-semibold text-rosalex-brown-700">Ano</th>
-                <th className="px-4 py-2 font-semibold text-rosalex-accent-blue">Inglês</th>
-                <th className="px-4 py-2 font-semibold text-rosalex-accent-orange">Caligrafia</th>
-                <th className="px-4 py-2 font-semibold text-rosalex-accent-green">Informática</th>
+                <th className="px-2 py-2 font-semibold text-rosalex-brown-700 whitespace-nowrap">Ano</th>
+                <th className="px-2 py-2 font-semibold text-rosalex-accent-blue whitespace-nowrap">Inglês</th>
+                <th className="px-2 py-2 font-semibold text-rosalex-accent-orange whitespace-nowrap">Caligrafia</th>
+                <th className="px-2 py-2 font-semibold text-rosalex-accent-green whitespace-nowrap">Informática</th>
+                <th className="px-2 py-2 font-semibold text-rosalex-accent-pink whitespace-nowrap">Acomp. Psicopedagógico</th>
               </tr>
             </thead>
             <tbody>
@@ -40,7 +41,7 @@ const TabelaPrecos: React.FC = () => {
                   <td className={`px-4 py-2 border-b ${linha.ingles ? 'bg-rosalex-accent-blue/20 text-rosalex-accent-blue font-semibold rounded' : ''}`}>{linha.ingles ? '✔' : ''}</td>
                   <td className={`px-4 py-2 border-b ${linha.caligrafia ? 'bg-rosalex-accent-orange/20 text-rosalex-accent-orange font-semibold rounded' : ''}`}>{linha.caligrafia ? '✔' : ''}</td>
                   <td className={`px-4 py-2 border-b ${linha.info ? 'bg-rosalex-accent-green/20 text-rosalex-accent-green font-semibold rounded' : ''}`}>{linha.info ? '✔' : ''}</td>
-                  {/* coluna Total removida */}
+                  <td className={`px-4 py-2 border-b ${linha.psicopedagogico ? 'bg-rosalex-accent-pink/20 text-rosalex-accent-pink font-semibold rounded' : ''}`}>{linha.psicopedagogico ? '✔' : ''}</td>
                 </tr>
               ))}
             </tbody>

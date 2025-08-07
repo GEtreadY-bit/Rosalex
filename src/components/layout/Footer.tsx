@@ -104,12 +104,12 @@ const Footer = () => {
               <li className="flex items-start">
                 <MapPin className="mr-2 h-5 w-5 text-rosalex-pink-300 flex-shrink-0 mt-0.5" />
                 <span className="text-rosalex-pink-100">
-                  Rua Principal, Bairro Educacional, Luanda, Angola
+                  Rua Do Paiyol, Gamek, Luanda, Angola
                 </span>
               </li>
               <li className="flex items-center">
                 <Phone className="mr-2 h-5 w-5 text-rosalex-brown-300 flex-shrink-0" />
-                <span className="text-rosalex-brown-100">+244 923 449 800</span>
+                <span className="text-rosalex-brown-100"></span>
               </li>
               <li className="flex items-center">
                 <Mail className="mr-2 h-5 w-5 text-rosalex-brown-300 flex-shrink-0" />
