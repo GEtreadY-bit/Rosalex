@@ -104,7 +104,7 @@ const Footer = () => {
               <li className="flex items-start">
                 <MapPin className="mr-2 h-5 w-5 text-rosalex-pink-300 flex-shrink-0 mt-0.5" />
                 <span className="text-rosalex-pink-100">
-                  Rua Do Paiyol, Gamek, Luanda, Angola
+               Angola, Luanda, Gamek, Rua do Paiyol, Por de detras do Bar Savana
                 </span>
               </li>
               <li className="flex items-start">
