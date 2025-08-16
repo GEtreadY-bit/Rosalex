@@ -107,9 +107,13 @@ const Footer = () => {
                   Rua Do Paiyol, Gamek, Luanda, Angola
                 </span>
               </li>
-              <li className="flex items-center">
-                <Phone className="mr-2 h-5 w-5 text-rosalex-brown-300 flex-shrink-0" />
-                <span className="text-rosalex-brown-100"></span>
+              <li className="flex items-start">
+                <Phone className="mr-2 h-5 w-5 text-rosalex-brown-300 flex-shrink-0 mt-0.5" />
+                <span className="text-rosalex-brown-100">
+                  +244 933 754 040<br />
+                  +244 929 523 689<br />
+                  +244 956 099 816
+                </span>
               </li>
               <li className="flex items-center">
                 <Mail className="mr-2 h-5 w-5 text-rosalex-brown-300 flex-shrink-0" />

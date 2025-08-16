@@ -59,7 +59,7 @@ const AboutPage = () => {
                   </div>
                   <div className="rounded-lg overflow-hidden shadow-lg mt-6 md:mt-0">
                     <img 
-                      src="public/IMG/IMG-20250805-WA0236.jpg" 
+                      src="/IMG/IMG-20250805-WA0236.jpg" 
                       alt="História do Colégio Rosalex" 
                       className="w-full h-40 sm:h-56 md:h-full object-cover"
                     />
@@ -73,7 +73,7 @@ const AboutPage = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-center">
                   <div className="order-2 md:order-1 rounded-lg overflow-hidden shadow-lg mt-6 md:mt-0">
                     <img 
-                      src="public/IMG/IMG-20250731-WA0025.jpg" 
+                      src="/IMG/IMG-20250731-WA0025.jpg" 
                       alt="Estrutura do Colégio Rosalex" 
                       className="w-full h-40 sm:h-56 md:h-full object-cover"
                     />
@@ -119,7 +119,7 @@ const AboutPage = () => {
                   </div>
                   <div className="rounded-lg overflow-hidden shadow-lg">
                     <img 
-                      src="public/IMG/IMG-20250805-WA0095.jpg" 
+                      src="/IMG/IMG-20250805-WA0095.jpg" 
                       alt="Filosofia Educacional do Colégio Rosalex" 
                       className="w-full h-full object-cover"
                     />

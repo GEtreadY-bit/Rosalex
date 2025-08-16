@@ -114,7 +114,9 @@ const ContactPage = () => {
                     <div>
                       <h3 className="font-bold text-rosalex-gray-900 mb-1">Telefone</h3>
                       <p className="text-rosalex-gray-700">
-                        +244 923 449 800<br />
+                        +244 933 754 040<br />
+                        +244 929 523 689<br />
+                        +244 956 099 816<br />
                       </p>
                     </div>
                   </CardContent>
