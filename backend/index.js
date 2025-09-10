@@ -1,11 +1,16 @@
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
+import express from 'express';
+import cors from 'cors';
+import bodyParser from 'body-parser';
 import sql from './db.js';
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
-const jwt = require('jsonwebtoken');
+import multer from 'multer';
+import path from 'path';
+import fs from 'fs';
+import jwt from 'jsonwebtoken';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
 const PORT = 4000;
@@ -171,7 +176,7 @@ app.post('/api/contact', async (req, res) => {
       <p>${message.replace(/\n/g, '<br>')}</p>
     `;
     await transporter.sendMail({
-      from: process.env.MAIL_FROM || 'site@colegiorosalex.co.ao',
+      from: process.env.MAIL_FROM || 'site@colegiorosalex.com',
       to: process.env.MAIL_TO || 'rosalexinfo@gmail.com',
       subject: `[Contato Site] ${subject}`,
       html,
