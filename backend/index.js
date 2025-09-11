@@ -1,13 +1,15 @@
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import sql from './db.js';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 import jwt from 'jsonwebtoken';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -59,7 +61,6 @@ function requireAuth(req, res, next) {
 // Rota de login (POST /login)
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
-  // Troque por validação real no banco
   if (username === 'admin' && password === 'admin123') {
     const token = jwt.sign({ username }, SECRET, { expiresIn: '2h' });
     return res.json({ token });
@@ -70,7 +71,9 @@ app.post('/login', (req, res) => {
 // GET all news
 app.get('/news', async (req, res) => {
   try {
-    const news = await sql`SELECT * FROM "News" ORDER BY date DESC`;
+    const news = await prisma.news.findMany({
+      orderBy: { date: 'desc' },
+    });
     res.json(news);
   } catch (err) {
     console.error('Erro ao buscar notícias:', err);
@@ -78,28 +81,32 @@ app.get('/news', async (req, res) => {
   }
 });
 
-// POST create news (com upload de imagem)
+// POST create news
 app.post('/news', requireAuth, upload.single('image'), async (req, res) => {
   try {
     const { title, excerpt, date, categories } = req.body;
-    let image = req.file ? `/uploads/${req.file.filename}` : req.body.image || '';
+    const image = req.file ? `/uploads/${req.file.filename}` : req.body.image || '';
     let parsedCategories;
-    if (Array.isArray(categories)) {
-      parsedCategories = categories;
-    } else if (typeof categories === 'string') {
+
+    if (Array.isArray(categories)) parsedCategories = categories;
+    else if (typeof categories === 'string') {
       try {
         parsedCategories = JSON.parse(categories);
       } catch {
         parsedCategories = [];
       }
-    } else {
-      parsedCategories = [];
-    }
-    const [news] = await sql`
-      INSERT INTO "News" (title, excerpt, date, image, categories)
-      VALUES (${title}, ${excerpt}, ${date}, ${image}, ${JSON.stringify(parsedCategories)})
-      RETURNING *;
-    `;
+    } else parsedCategories = [];
+
+    const news = await prisma.news.create({
+      data: {
+        title,
+        excerpt,
+        date,
+        image,
+        categories: parsedCategories,
+      },
+    });
+
     res.status(201).json(news);
   } catch (err) {
     console.error('Erro ao criar notícia:', err);
@@ -107,30 +114,28 @@ app.post('/news', requireAuth, upload.single('image'), async (req, res) => {
   }
 });
 
-// PUT update news (com upload de imagem)
+// PUT update news
 app.put('/news/:id', requireAuth, upload.single('image'), async (req, res) => {
   try {
     const { id } = req.params;
     const { title, excerpt, date, categories } = req.body;
-    let image = req.file ? `/uploads/${req.file.filename}` : req.body.image || '';
+    const image = req.file ? `/uploads/${req.file.filename}` : req.body.image || '';
     let parsedCategories;
-    if (Array.isArray(categories)) {
-      parsedCategories = categories;
-    } else if (typeof categories === 'string') {
+
+    if (Array.isArray(categories)) parsedCategories = categories;
+    else if (typeof categories === 'string') {
       try {
         parsedCategories = JSON.parse(categories);
       } catch {
         parsedCategories = [];
       }
-    } else {
-      parsedCategories = [];
-    }
-    const [news] = await sql`
-      UPDATE "News"
-      SET title = ${title}, excerpt = ${excerpt}, date = ${date}, image = ${image}, categories = ${JSON.stringify(parsedCategories)}
-      WHERE id = ${Number(id)}
-      RETURNING *;
-    `;
+    } else parsedCategories = [];
+
+    const news = await prisma.news.update({
+      where: { id: Number(id) },
+      data: { title, excerpt, date, image, categories: parsedCategories },
+    });
+
     res.json(news);
   } catch (err) {
     console.error('Erro ao atualizar notícia:', err);
@@ -142,7 +147,7 @@ app.put('/news/:id', requireAuth, upload.single('image'), async (req, res) => {
 app.delete('/news/:id', requireAuth, async (req, res) => {
   try {
     const { id } = req.params;
-    await sql`DELETE FROM "News" WHERE id = ${Number(id)}`;
+    await prisma.news.delete({ where: { id: Number(id) } });
     res.json({ message: 'Notícia deletada com sucesso.' });
   } catch (err) {
     console.error('Erro ao deletar notícia:', err);
@@ -150,7 +155,7 @@ app.delete('/news/:id', requireAuth, async (req, res) => {
   }
 });
 
-// Rota de contato: recebe dados do formulário e envia e-mail
+// Rota de contato (mantida igual)
 app.post('/api/contact', async (req, res) => {
   try {
     const { name, email, phone, subject, interest, studentAge, message } = req.body;
@@ -158,7 +163,6 @@ app.post('/api/contact', async (req, res) => {
       return res.status(400).json({ error: 'Campos obrigatórios ausentes.' });
     }
     const transporter = require('./mailer');
-    // Monta o corpo do e-mail
     let interestLabel = {
       information: 'Informações Gerais',
       enrollment: 'Matrícula/Inscrição',
@@ -189,7 +193,7 @@ app.post('/api/contact', async (req, res) => {
   }
 });
 
-// Servir arquivos estáticos de uploads
+// Servir uploads
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.listen(PORT, () => {

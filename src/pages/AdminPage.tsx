@@ -16,7 +16,14 @@ interface News {
   createdAt?: string;
 }
 
-const API_URL = "http://localhost:4000/news";
+const API_URL = (() => {
+  // When running locally in dev, use the local backend
+  if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
+    return "http://localhost:4000/news";
+  }
+  // In production (Netlify), call the serverless function
+  return "/.netlify/functions/news";
+})();
 
 const initialForm = {
   title: "",
@@ -87,37 +94,101 @@ const AdminPage = () => {
     e.preventDefault();
     setSubmitting(true);
     try {
-      const formData = new FormData();
-      formData.append('title', form.title);
-      formData.append('excerpt', form.excerpt);
-      formData.append('date', form.date);
-      formData.append('categories', JSON.stringify(form.categories));
-      if (form.image && typeof (form.image as any).name === 'string' && (form.image as any).type?.startsWith('image/')) {
-        formData.append('image', form.image as unknown as File);
-      } else if (typeof form.image === 'string') {
-        formData.append('image', form.image);
-      }
+      const token = localStorage.getItem('adminToken');
+      const headers = token ? { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' } : { 'Content-Type': 'application/json' };
+
+      // helper to upload file to Cloudinary using signed upload (via cloudinary-sign function).
+      // Falls back to unsigned upload_preset if signing is not available.
+      const uploadToCloudinary = async (file: File) => {
+        const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+        if (!cloudName) throw new Error('Cloudinary not configured (VITE_CLOUDINARY_CLOUD_NAME)');
+
+        // Try signed upload: request signature from serverless function
+        try {
+          const signRes = await fetch('/.netlify/functions/cloudinary-sign', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({}) });
+          if (signRes.ok) {
+            const signJson = await signRes.json();
+            const { signature, api_key, timestamp, cloudName: signedCloudName } = signJson;
+            const url = `https://api.cloudinary.com/v1_1/${signedCloudName || cloudName}/upload`;
+            const fd = new FormData();
+            fd.append('file', file);
+            fd.append('api_key', api_key);
+            fd.append('timestamp', String(timestamp));
+            fd.append('signature', signature);
+            const folder = import.meta.env.VITE_CLOUDINARY_UPLOAD_FOLDER;
+            if (folder) fd.append('folder', folder);
+            const r = await fetch(url, { method: 'POST', body: fd });
+            if (!r.ok) throw new Error('Erro ao enviar imagem para Cloudinary (signed)');
+            const json = await r.json();
+            return json.secure_url as string;
+          }
+        } catch (err) {
+          console.warn('Signed Cloudinary upload failed, falling back to unsigned if configured:', err);
+        }
+
+        // Fallback: unsigned upload using upload_preset (must be configured)
+        const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
+        if (!uploadPreset) throw new Error('Cloudinary unsigned preset not configured (VITE_CLOUDINARY_UPLOAD_PRESET)');
+        const url = `https://api.cloudinary.com/v1_1/${cloudName}/upload`;
+        const fd = new FormData();
+        fd.append('file', file);
+        fd.append('upload_preset', uploadPreset);
+        const r2 = await fetch(url, { method: 'POST', body: fd });
+        if (!r2.ok) throw new Error('Erro ao enviar imagem para Cloudinary (unsigned)');
+        const json2 = await r2.json();
+        return json2.secure_url as string;
+      };
+
       if (editing) {
-        await fetch(`${API_URL}/${editing.id}`, {
-          method: "PUT",
-          body: formData,
-          headers: getAuthHeaders(),
-        });
-        toast({ title: "Notícia atualizada com sucesso!", variant: "default" });
+        if (API_URL.startsWith('http')) {
+          const formData = new FormData();
+          formData.append('title', form.title);
+          formData.append('excerpt', form.excerpt);
+          formData.append('date', form.date);
+          formData.append('categories', JSON.stringify(form.categories));
+          if (form.image && typeof (form.image as any).name === 'string' && (form.image as any).type?.startsWith('image/')) {
+            formData.append('image', form.image as unknown as File);
+          } else if (typeof form.image === 'string') {
+            formData.append('image', form.image);
+          }
+          await fetch(`${API_URL}/${editing.id}`, { method: 'PUT', body: formData, headers: getAuthHeaders() });
+        } else {
+          let imageUrl = typeof form.image === 'string' ? form.image : '';
+          if (form.image && typeof (form.image as any).name === 'string') {
+            imageUrl = await uploadToCloudinary(form.image as unknown as File);
+          }
+          await fetch('/.netlify/functions/news-update?id=' + editing.id, { method: 'POST', headers, body: JSON.stringify({ title: form.title, excerpt: form.excerpt, date: form.date, image: imageUrl, categories: form.categories }) });
+        }
+        toast({ title: 'Notícia atualizada com sucesso!', variant: 'default' });
       } else {
-        await fetch(API_URL, {
-          method: "POST",
-          body: formData,
-          headers: getAuthHeaders(),
-        });
-        toast({ title: "Notícia criada com sucesso!", variant: "default" });
+        if (API_URL.startsWith('http')) {
+          const formData = new FormData();
+          formData.append('title', form.title);
+          formData.append('excerpt', form.excerpt);
+          formData.append('date', form.date);
+          formData.append('categories', JSON.stringify(form.categories));
+          if (form.image && typeof (form.image as any).name === 'string' && (form.image as any).type?.startsWith('image/')) {
+            formData.append('image', form.image as unknown as File);
+          } else if (typeof form.image === 'string') {
+            formData.append('image', form.image);
+          }
+          await fetch(API_URL, { method: 'POST', body: formData, headers: getAuthHeaders() });
+        } else {
+          let imageUrl = typeof form.image === 'string' ? form.image : '';
+          if (form.image && typeof (form.image as any).name === 'string') {
+            imageUrl = await uploadToCloudinary(form.image as unknown as File);
+          }
+          await fetch('/.netlify/functions/news-create', { method: 'POST', headers, body: JSON.stringify({ title: form.title, excerpt: form.excerpt, date: form.date, image: imageUrl, categories: form.categories }) });
+        }
+        toast({ title: 'Notícia criada com sucesso!', variant: 'default' });
       }
       setForm(initialForm);
       setEditing(null);
       fetchNews();
-    } catch {
-      setError("Erro ao salvar notícia");
-      toast({ title: "Erro ao salvar notícia", variant: "destructive" });
+    } catch (err) {
+      console.error('handleSubmit error:', err);
+      setError('Erro ao salvar notícia');
+      toast({ title: 'Erro ao salvar notícia', variant: 'destructive' });
     }
     setSubmitting(false);
   };
@@ -141,7 +212,13 @@ const AdminPage = () => {
   const confirmDelete = async () => {
     if (!deleteId) return;
     try {
-      await fetch(`${API_URL}/${deleteId}`, { method: "DELETE", headers: getAuthHeaders() });
+      if (API_URL.startsWith('http')) {
+        await fetch(`${API_URL}/${deleteId}`, { method: 'DELETE', headers: getAuthHeaders() });
+      } else {
+        const token = localStorage.getItem('adminToken');
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
+        await fetch('/.netlify/functions/news-delete?id=' + deleteId, { method: 'POST', headers });
+      }
       fetchNews();
       toast({ title: "Notícia excluída com sucesso!", variant: "default" });
     } catch {
