@@ -98,45 +98,29 @@ const AdminPage = () => {
       const headers = token ? { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' } : { 'Content-Type': 'application/json' };
 
       // helper to upload file to Cloudinary using signed upload (via cloudinary-sign function).
-      // Falls back to unsigned upload_preset if signing is not available.
+      // Signed upload is required; cloudinary-sign must be configured on Netlify with CLOUDINARY_API_KEY/SECRET/CLOUDINARY_CLOUD_NAME.
       const uploadToCloudinary = async (file: File) => {
-        const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
-        if (!cloudName) throw new Error('Cloudinary not configured (VITE_CLOUDINARY_CLOUD_NAME)');
-
-        // Try signed upload: request signature from serverless function
-        try {
-          const signRes = await fetch('/.netlify/functions/cloudinary-sign', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({}) });
-          if (signRes.ok) {
-            const signJson = await signRes.json();
-            const { signature, api_key, timestamp, cloudName: signedCloudName } = signJson;
-            const url = `https://api.cloudinary.com/v1_1/${signedCloudName || cloudName}/upload`;
-            const fd = new FormData();
-            fd.append('file', file);
-            fd.append('api_key', api_key);
-            fd.append('timestamp', String(timestamp));
-            fd.append('signature', signature);
-            const folder = import.meta.env.VITE_CLOUDINARY_UPLOAD_FOLDER;
-            if (folder) fd.append('folder', folder);
-            const r = await fetch(url, { method: 'POST', body: fd });
-            if (!r.ok) throw new Error('Erro ao enviar imagem para Cloudinary (signed)');
-            const json = await r.json();
-            return json.secure_url as string;
-          }
-        } catch (err) {
-          console.warn('Signed Cloudinary upload failed, falling back to unsigned if configured:', err);
+        const signRes = await fetch('/.netlify/functions/cloudinary-sign', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({}) });
+        if (!signRes.ok) {
+          const text = await signRes.text().catch(() => '');
+          throw new Error('Não foi possível obter assinatura Cloudinary: ' + (text || signRes.statusText));
         }
-
-        // Fallback: unsigned upload using upload_preset (must be configured)
-        const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
-        if (!uploadPreset) throw new Error('Cloudinary unsigned preset not configured (VITE_CLOUDINARY_UPLOAD_PRESET)');
+        const signJson = await signRes.json();
+        const { signature, api_key, timestamp, cloudName } = signJson;
+        if (!signature || !api_key || !timestamp || !cloudName) throw new Error('Resposta de assinatura Cloudinary inválida');
         const url = `https://api.cloudinary.com/v1_1/${cloudName}/upload`;
         const fd = new FormData();
         fd.append('file', file);
-        fd.append('upload_preset', uploadPreset);
-        const r2 = await fetch(url, { method: 'POST', body: fd });
-        if (!r2.ok) throw new Error('Erro ao enviar imagem para Cloudinary (unsigned)');
-        const json2 = await r2.json();
-        return json2.secure_url as string;
+        fd.append('api_key', api_key);
+        fd.append('timestamp', String(timestamp));
+        fd.append('signature', signature);
+        const r = await fetch(url, { method: 'POST', body: fd });
+        if (!r.ok) {
+          const body = await r.text().catch(() => '');
+          throw new Error('Erro ao enviar imagem para Cloudinary: ' + (body || r.statusText));
+        }
+        const json = await r.json();
+        return json.secure_url as string;
       };
 
       if (editing) {

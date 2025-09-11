@@ -306,7 +306,7 @@ const ContactPage = () => {
                         rules={{ required: "Mensagem é obrigatória" }}
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Mensagemmm*</FormLabel>
+                            <FormLabel>Mensagem</FormLabel>
                             <FormControl>
                               <Textarea rows={5} {...field} />
                             </FormControl>
