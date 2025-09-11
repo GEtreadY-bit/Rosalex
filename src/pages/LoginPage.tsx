@@ -13,9 +13,10 @@ const LoginPage = () => {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch("http://localhost:4000/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const loginUrl = (typeof window !== 'undefined' && window.location.hostname === 'localhost') ? 'http://localhost:4000/login' : '/.netlify/functions/login';
+      const res = await fetch(loginUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
       });
       if (!res.ok) throw new Error("Usuário ou senha inválidos");
