@@ -169,13 +169,13 @@ const NewsPage = () => {
                 <div className="space-y-4">
                   {newsItems.slice(0, 3).map((item) => (
                     <div key={item.id} className="flex items-start space-x-3">
-                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-md overflow-hidden flex-shrink-0 flex items-center justify-center bg-gray-100">
-                    <img
-                      src={getImageUrl(item.image)}
-                      alt={item.title}
-                      className="max-h-12 sm:max-h-14 max-w-full rounded object-center"
-                      style={{ objectFit: 'contain', background: '#f3f4f6' }}
-                    />
+                      <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-md overflow-hidden flex-shrink-0 flex items-center justify-center bg-gray-100">
+                        <img
+                          src={getImageUrl(item.image)}
+                          alt={item.title}
+                          className="max-h-12 sm:max-h-14 max-w-full rounded object-center"
+                          style={{ objectFit: 'cover', background: '#f3f4f6' }}
+                        />
                       </div>
                       <div>
                         <h4 className="text-sm font-medium text-rosalex-gray-900 line-clamp-2">
@@ -214,50 +214,67 @@ const NewsPage = () => {
               ) : filteredNews.length > 0 ? (
                 <>
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
-                    {paginatedNews.map((news) => (
-                      <Card
-                        key={news.id}
-                        className="border-rosalex-gray-200 hover:shadow-lg transition-shadow overflow-hidden cursor-pointer bg-white/95"
-                        tabIndex={0}
-                        role="button"
-                        aria-label={`Ver detalhes da notícia: ${news.title}`}
-                        onClick={() => setSelectedNews(news)}
-                        onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') setSelectedNews(news); }}
-                      >
-                        <div className="h-40 sm:h-44 w-full bg-gray-100 overflow-hidden rounded-t-lg">
-                          <img
-                            src={getImageUrl(news.image)}
-                            alt={news.title}
-                            className="w-full h-full object-cover transition-transform hover:scale-105 duration-300"
-                            style={{ minHeight: '100%', minWidth: '100%' }}
-                          />
-                        </div>
-                        <CardHeader className="pb-2">
-                          <div className="flex items-center text-sm text-rosalex-gray-500 mb-2">
-                            <CalendarDays className="h-4 w-4 mr-1" />
-                            {news.date}
+                    {paginatedNews.map((news) => {
+                      const excerpt = news.excerpt || '';
+                      const maxChars = 140; // tamanho antes de mostrar 'Ler mais'
+                      const shouldTruncate = excerpt.length > maxChars;
+                      return (
+                        <Card
+                          key={news.id}
+                          className="border-rosalex-gray-200 hover:shadow-lg transition-shadow overflow-hidden cursor-pointer bg-white/95"
+                          tabIndex={0}
+                          role="button"
+                          aria-label={`Ver detalhes da notícia: ${news.title}`}
+                          onClick={() => setSelectedNews(news)}
+                          onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') setSelectedNews(news); }}
+                        >
+                          <div className="h-48 sm:h-56 md:h-64 w-full bg-gray-100 overflow-hidden rounded-t-lg">
+                            <img
+                              src={getImageUrl(news.image)}
+                              alt={news.title}
+                              className="w-full h-full object-cover transition-transform hover:scale-105 duration-300"
+                              style={{ minHeight: '100%', minWidth: '100%' }}
+                            />
                           </div>
-                          <CardTitle className="text-xl text-rosalex-gray-900">{news.title}</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <CardDescription className="text-rosalex-gray-600 text-base">
-                            {news.excerpt}
-                          </CardDescription>
-                          <div className="flex flex-wrap gap-2 mt-4">
-                            {news.categories.map((category, idx) => (
-                              <Badge
-                                key={idx}
-                                variant="outline"
-                                className="bg-rosalex-gray-50 text-rosalex-gray-700 border-rosalex-gray-200"
-                              >
-                                <Tag className="h-3 w-3 mr-1" />
-                                {category}
-                              </Badge>
-                            ))}
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
+                          <CardHeader className="pb-2">
+                            <div className="flex items-center text-sm text-rosalex-gray-500 mb-2">
+                              <CalendarDays className="h-4 w-4 mr-1" />
+                              {news.date}
+                            </div>
+                            <CardTitle className="text-xl text-rosalex-gray-900">{news.title}</CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <CardDescription className="text-rosalex-gray-600 text-base">
+                              <div className="whitespace-pre-line">
+                                {shouldTruncate ? `${excerpt.slice(0, maxChars)}...` : excerpt}
+                              </div>
+                              {excerpt.length > maxChars && (
+                                <button
+                                  type="button"
+                                  onClick={(e) => { e.stopPropagation(); setSelectedNews(news); }}
+                                  className="text-rosalex-pink-700 font-semibold mt-2 inline-block hover:underline"
+                                  aria-label="Ler mais"
+                                >
+                                  Ler mais
+                                </button>
+                              )}
+                            </CardDescription>
+                            <div className="flex flex-wrap gap-2 mt-4">
+                              {news.categories.map((category, idx) => (
+                                <Badge
+                                  key={idx}
+                                  variant="outline"
+                                  className="bg-rosalex-gray-50 text-rosalex-gray-700 border-rosalex-gray-200"
+                                >
+                                  <Tag className="h-3 w-3 mr-1" />
+                                  {category}
+                                </Badge>
+                              ))}
+                            </div>
+                          </CardContent>
+                        </Card>
+                      );
+                    })}
                   </div>
                   {/* Controles de paginação */}
                   {totalPages > 1 && (
@@ -314,12 +331,12 @@ const NewsPage = () => {
         <DialogContent className="max-w-lg sm:max-w-xl md:max-w-2xl w-full p-0 md:p-0 bg-white/95 rounded-xl shadow-2xl animate-fade-in border border-rosalex-gray-100">
           {selectedNews && (
             <div className="flex flex-col md:flex-row gap-0 md:gap-8">
-              <div className="md:w-1/2 w-full h-48 sm:h-64 md:h-auto flex items-center justify-center bg-gray-100 rounded-t-lg md:rounded-l-lg md:rounded-tr-none overflow-hidden">
+              <div className="md:w-1/2 w-full flex items-center justify-center bg-gray-100 rounded-t-lg md:rounded-l-lg md:rounded-tr-none overflow-auto">
                 <img
                   src={getImageUrl(selectedNews.image)}
                   alt={selectedNews.title}
-                  className="w-full h-full object-contain md:object-cover"
-                  style={{ maxHeight: '300px' }}
+                  className="w-full h-auto object-contain"
+                  style={{ maxHeight: '70vh' }}
                 />
               </div>
               <div className="flex-1 p-4 sm:p-6 flex flex-col">
