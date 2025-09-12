@@ -32,6 +32,8 @@ const GalleryPage = () => {
     { src: "/IMG/IMG-20250805-WA0080.jpg", alt: "Competição esportiva", category: "events" },
     { src: "/IMG/IMG-20250805-WA0077.jpg", alt: "Dia da família na escola", category: "events" },
     { src: "/IMG/IMG-20250805-WA0073.jpg", alt: "Palestra educacional", category: "events" },
+    { src: "/IMG/IMG-20250908-WA0086.jpg", alt: "Palestra educacional", category: "events" },
+    { src: "/IMG/IMG-20250908-WA0089.jpg", alt: "Palestra educacional", category: "events" }
   ];
 
   return (
