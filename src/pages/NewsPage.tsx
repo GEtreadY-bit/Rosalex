@@ -257,7 +257,7 @@ const NewsPage = () => {
                           onClick={() => setSelectedNews(news)}
                           onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') setSelectedNews(news); }}
                         >
-                          <div className="h-72 sm:h-80 md:h-96 w-full bg-gray-100 overflow-hidden rounded-t-lg">
+                          <div className="h-48 sm:h-72 md:h-64 w-full bg-gray-100 overflow-hidden rounded-t-lg">
                             <img
                               loading="lazy"
                               src={getImageUrl(news.image)}
@@ -359,19 +359,21 @@ const NewsPage = () => {
       {/* Modal de detalhe da notícia (custom) */}
       {selectedNews && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/60" onClick={() => setSelectedNews(null)} />
-          <div className="relative max-w-3xl w-full bg-white rounded-xl shadow-2xl overflow-hidden">
+          <div className="absolute inset-0 bg-black/60 z-40" onClick={() => setSelectedNews(null)} />
+          {/* Close button placed inside modal (always visible) — removed fixed button above and added inside modal wrapper) */}
+
+          <div className="relative max-w-3xl w-full bg-white rounded-xl shadow-2xl overflow-hidden z-50">
+            {/* Close button inside modal so it's always visible on any device */}
             <button
               onClick={() => setSelectedNews(null)}
               aria-label="Fechar"
-              className="absolute top-3 right-3 z-50 bg-white/90 rounded-full p-2 shadow-md"
+              className="absolute top-3 right-3 z-50 bg-white rounded-full p-2 shadow-md"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-rosalex-gray-700" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
             </button>
-
-            <div className="flex flex-col md:flex-row">
+            <div className="md:flex md:items-stretch">
               <div className="md:w-1/2 w-full flex items-center justify-center bg-gray-100">
                 <img
                   src={getImageUrl(selectedNews.image)}
@@ -380,7 +382,18 @@ const NewsPage = () => {
                   style={{ maxHeight: '70vh' }}
                 />
               </div>
-              <div className="flex-1 p-4 sm:p-6 flex flex-col">
+              <div className="md:w-1/2 w-full p-4 sm:p-6 flex flex-col relative">
+                {/* Close button for phones: positioned inside the text column, top-right */}
+                <button
+                  onClick={() => setSelectedNews(null)}
+                  aria-label="Fechar"
+                  className="absolute top-3 right-3 z-50 bg-white rounded-full p-2 shadow-md md:hidden"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-rosalex-gray-700" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </button>
+
                 <div className="text-2xl text-rosalex-gray-900 font-semibold mb-2">{selectedNews.title}</div>
                 <div className="flex items-center text-sm text-rosalex-gray-500 mb-4">
                   <CalendarDays className="h-4 w-4 mr-1" />
