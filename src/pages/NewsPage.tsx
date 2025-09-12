@@ -124,9 +124,9 @@ const NewsPage = () => {
       {/* News Content */}
       <section className="py-10 sm:py-14 md:py-16 bg-gradient-to-b from-rosalex-gray-50 via-white to-rosalex-pink-50">
         <div className="container mx-auto px-2 sm:px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">
-            {/* Sidebar */}
-            <div className="md:col-span-1 space-y-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-8">
+            {/* Sidebar (escondida em mobile) */}
+            <div className="md:col-span-1 space-y-8 hidden md:block">
               {/* Search */}
               <div>
                 <h3 className="text-lg font-bold text-rosalex-gray-900 mb-4">Buscar</h3>
@@ -171,6 +171,7 @@ const NewsPage = () => {
                     <div key={item.id} className="flex items-start space-x-3">
                       <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-md overflow-hidden flex-shrink-0 flex items-center justify-center bg-gray-100">
                         <img
+                          loading="lazy"
                           src={getImageUrl(item.image)}
                           alt={item.title}
                           className="max-h-12 sm:max-h-14 max-w-full rounded object-center"
@@ -185,6 +186,34 @@ const NewsPage = () => {
                       </div>
                     </div>
                   ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Mobile controls (search + category) */}
+            <div className="md:hidden mb-4 md:mb-0">
+              <div className="space-y-3">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-rosalex-gray-400 h-4 w-4" />
+                  <Input
+                    placeholder="Buscar notícias..."
+                    className="pl-10"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <select
+                    className="w-full border border-rosalex-gray-200 rounded px-3 py-2 bg-white text-rosalex-gray-900"
+                    value={activeCategory || ''}
+                    onChange={e => setActiveCategory(e.target.value || null)}
+                    aria-label="Filtrar por categoria"
+                  >
+                    <option value="">Todas as categorias</option>
+                    {allCategories.map((cat, idx) => (
+                      <option key={idx} value={cat}>{cat}</option>
+                    ))}
+                  </select>
                 </div>
               </div>
             </div>
@@ -213,7 +242,7 @@ const NewsPage = () => {
                 </div>
               ) : filteredNews.length > 0 ? (
                 <>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 md:gap-8">
                     {paginatedNews.map((news) => {
                       const excerpt = news.excerpt || '';
                       const maxChars = 140; // tamanho antes de mostrar 'Ler mais'
@@ -228,7 +257,7 @@ const NewsPage = () => {
                           onClick={() => setSelectedNews(news)}
                           onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') setSelectedNews(news); }}
                         >
-                          <div className="h-56 sm:h-64 md:h-72 w-full bg-gray-100 overflow-hidden rounded-t-lg">
+                          <div className="h-72 sm:h-80 md:h-96 w-full bg-gray-100 overflow-hidden rounded-t-lg">
                             <img
                               loading="lazy"
                               src={getImageUrl(news.image)}
@@ -245,7 +274,7 @@ const NewsPage = () => {
                             <CardTitle className="text-xl text-rosalex-gray-900">{news.title}</CardTitle>
                           </CardHeader>
                           <CardContent>
-                            <CardDescription className="text-rosalex-gray-600 text-base">
+                            <CardDescription className="text-rosalex-gray-600 text-sm sm:text-base leading-relaxed">
                               <div className="whitespace-pre-line">
                                 {shouldTruncate ? `${excerpt.slice(0, maxChars)}...` : excerpt}
                               </div>
@@ -327,12 +356,23 @@ const NewsPage = () => {
         </div>
       </section>
 
-      {/* Modal de detalhe da notícia */}
-      <Dialog open={!!selectedNews} onOpenChange={open => !open && setSelectedNews(null)}>
-        <DialogContent className="max-w-lg sm:max-w-xl md:max-w-2xl w-full p-0 md:p-0 bg-white/95 rounded-xl shadow-2xl animate-fade-in border border-rosalex-gray-100">
-          {selectedNews && (
-            <div className="flex flex-col md:flex-row gap-0 md:gap-8">
-              <div className="md:w-1/2 w-full flex items-center justify-center bg-gray-100 rounded-t-lg md:rounded-l-lg md:rounded-tr-none overflow-auto">
+      {/* Modal de detalhe da notícia (custom) */}
+      {selectedNews && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/60" onClick={() => setSelectedNews(null)} />
+          <div className="relative max-w-3xl w-full bg-white rounded-xl shadow-2xl overflow-hidden">
+            <button
+              onClick={() => setSelectedNews(null)}
+              aria-label="Fechar"
+              className="absolute top-3 right-3 z-50 bg-white/90 rounded-full p-2 shadow-md"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-rosalex-gray-700" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </button>
+
+            <div className="flex flex-col md:flex-row">
+              <div className="md:w-1/2 w-full flex items-center justify-center bg-gray-100">
                 <img
                   src={getImageUrl(selectedNews.image)}
                   alt={selectedNews.title}
@@ -341,18 +381,12 @@ const NewsPage = () => {
                 />
               </div>
               <div className="flex-1 p-4 sm:p-6 flex flex-col">
-                <DialogHeader>
-                  <DialogTitle className="text-2xl text-rosalex-gray-900 mb-2">{selectedNews.title}</DialogTitle>
-                  <div className="flex items-center text-sm text-rosalex-gray-500 mb-4">
-                    <CalendarDays className="h-4 w-4 mr-1" />
-                    {selectedNews.date}
-                  </div>
-                </DialogHeader>
-                <DialogDescription asChild>
-                  <div className="text-rosalex-gray-700 text-base mb-4 whitespace-pre-line">
-                    {selectedNews.excerpt}
-                  </div>
-                </DialogDescription>
+                <div className="text-2xl text-rosalex-gray-900 font-semibold mb-2">{selectedNews.title}</div>
+                <div className="flex items-center text-sm text-rosalex-gray-500 mb-4">
+                  <CalendarDays className="h-4 w-4 mr-1" />
+                  {selectedNews.date}
+                </div>
+                <div className="text-rosalex-gray-700 text-base mb-4 whitespace-pre-line">{selectedNews.excerpt}</div>
                 <div className="flex flex-wrap gap-2 mt-auto">
                   {selectedNews.categories.map((category, idx) => (
                     <Badge
@@ -367,9 +401,9 @@ const NewsPage = () => {
                 </div>
               </div>
             </div>
-          )}
-        </DialogContent>
-      </Dialog>
+          </div>
+        </div>
+      )}
     </Layout>
   );
 };
