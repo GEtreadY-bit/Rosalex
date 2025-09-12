@@ -1,4 +1,4 @@
-import Layout from "@/components/layout/Layout";
+import Layout from "@/components/layout/Layout"; 
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -30,25 +30,45 @@ const NewsPage = () => {
   const totalPages = Math.ceil(newsItems.length / NEWS_PER_PAGE);
 
   useEffect(() => {
-    fetch("http://localhost:4000/news")
-      .then((res) => res.json())
-      .then((data) => {
+    const fetchNews = async () => {
+      setLoading(true);
+      const candidates = ['/news', '/.netlify/functions/news', 'http://localhost:4000/news'];
+      let data: any = null;
+
+      for (const url of candidates) {
+        try {
+          const res = await fetch(url);
+          if (!res.ok) throw new Error(`status ${res.status}`);
+          data = await res.json();
+          break;
+        } catch (err) {
+          // tenta próximo endpoint
+        }
+      }
+
+      if (data) {
         // Corrige o campo categories se vier como string JSON
         const parsed = data.map((item: any) => ({
           ...item,
           categories: typeof item.categories === "string" ? JSON.parse(item.categories) : item.categories,
         }));
         setNewsItems(parsed);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
+      }
+
+      setLoading(false);
+    };
+
+    fetchNews();
   }, []);
 
   // Corrige o caminho da imagem para ser absoluto
   const getImageUrl = (image: string) => {
     if (!image) return '';
     if (image.startsWith('http')) return image;
-    return `http://localhost:4000${image}`;
+    // caminho absoluto vindo do backend (ex: /uploads/xxx)
+    if (image.startsWith('/')) return `${window.location.origin}${image}`;
+    // caso seja apenas um caminho relativo
+    return `${window.location.origin}/${image}`;
   };
 
   // Extract all unique categories
