@@ -228,8 +228,9 @@ const NewsPage = () => {
                           onClick={() => setSelectedNews(news)}
                           onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') setSelectedNews(news); }}
                         >
-                          <div className="h-48 sm:h-56 md:h-64 w-full bg-gray-100 overflow-hidden rounded-t-lg">
+                          <div className="h-56 sm:h-64 md:h-72 w-full bg-gray-100 overflow-hidden rounded-t-lg">
                             <img
+                              loading="lazy"
                               src={getImageUrl(news.image)}
                               alt={news.title}
                               className="w-full h-full object-cover transition-transform hover:scale-105 duration-300"
