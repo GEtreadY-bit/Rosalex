@@ -1,4 +1,3 @@
-
 import Layout from "@/components/layout/Layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -58,6 +57,11 @@ const AboutPage = () => {
                     </p>
                   </div>
                   <div className="rounded-lg overflow-hidden shadow-lg mt-6 md:mt-0">
+                    <img
+                      src="/IMG/IMG-20250805-WA0073.jpg"
+                      alt="História do Colégio Rosalex"
+                      className="w-full h-auto object-cover"
+                    />
                   </div>
                 </div>
               </div>
@@ -67,6 +71,11 @@ const AboutPage = () => {
               <div className="bg-white/90 rounded-xl shadow-lg p-4 sm:p-8 max-w-4xl mx-auto border border-rosalex-gray-100">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-center">
                   <div className="order-2 md:order-1 rounded-lg overflow-hidden shadow-lg mt-6 md:mt-0">
+                    <img
+                      src="/IMG/IMG-20250731-WA0004.jpg"
+                      alt="Estrutura do Colégio Rosalex"
+                      className="w-full h-auto object-cover"
+                    />
                   </div>
                   <div className="order-1 md:order-2">
                     <h2 className="text-2xl font-bold text-rosalex-gray-900 mb-4">Nossa Estrutura</h2>
@@ -108,6 +117,11 @@ const AboutPage = () => {
                     </p>
                   </div>
                   <div className="rounded-lg overflow-hidden shadow-lg">
+                    <img
+                      src="/IMG/IMG-20250805-WA0172.jpg"
+                      alt="Filosofia Educacional do Colégio Rosalex"
+                      className="w-full h-auto object-cover"
+                    />
                   </div>
                 </div>
               </div>
