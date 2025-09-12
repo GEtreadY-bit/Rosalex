@@ -363,11 +363,11 @@ const NewsPage = () => {
           {/* Close button placed inside modal (always visible) — removed fixed button above and added inside modal wrapper) */}
 
           <div className="relative max-w-3xl w-full bg-white rounded-xl shadow-2xl overflow-hidden z-50">
-            {/* Close button inside modal so it's always visible on any device */}
+            {/* Close button for desktop/tablet (hidden on mobile) */}
             <button
               onClick={() => setSelectedNews(null)}
               aria-label="Fechar"
-              className="absolute top-3 right-3 z-50 bg-white rounded-full p-2 shadow-md"
+              className="hidden md:block absolute top-3 right-3 z-50 bg-white rounded-full p-2 shadow-md"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-rosalex-gray-700" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -387,7 +387,7 @@ const NewsPage = () => {
                 <button
                   onClick={() => setSelectedNews(null)}
                   aria-label="Fechar"
-                  className="absolute top-3 right-3 z-50 bg-white rounded-full p-2 shadow-md md:hidden"
+                  className="absolute top-4 right-4 z-50 bg-white rounded-full p-3 shadow-md md:hidden"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-rosalex-gray-700" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
