@@ -152,7 +152,7 @@ const ContactPage = () => {
                 <h3 className="text-xl font-bold text-rosalex-gray-900 mb-4">Localização</h3>
                 <div className="rounded-xl overflow-hidden h-64 border-2 border-rosalex-gray-200">
                  <iframe 
-                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3941.841961036342!2d13.213626675017267!3d-8.89428139116177!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1a51f5b28689d7a3%3A0x808ceb8d264a4d23!2sCol%C3%A9gio%20Rosalex!5e0!3m2!1spt-PT!2sao!4v1749245203905!5m2!1spt-PT!2sao" 
+                 src="<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3941.8419749375867!2d13.216226899999999!3d-8.8942801!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1a51f5b28689d7a3%3A0x808ceb8d264a4d23!2sCol%C3%A9gio%20Rosalex!5e0!3m2!1spt-PT!2sao!4v1758994517995!5m2!1spt-PT!2sao" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" 
                     width="100%" 
                     height="100%" 
                     style={{ border: 0 }} 

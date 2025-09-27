@@ -42,7 +42,6 @@ const GalleryPage = () => {
     { src: "/IMG/IMG-20250908-WA0084.jpg", alt: "Palestra educacional", category: "events" },
     { src: "/IMG/IMG-20250908-WA0087.jpg", alt: "Palestra educacional", category: "events" },
   ];
-
   return (
     <Layout>
       {/* Hero Section */}
